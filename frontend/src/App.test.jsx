@@ -68,7 +68,7 @@ describe('App Routing', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('2022 BMW 330e')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('2022 BMW 330e');
     });
   });
 

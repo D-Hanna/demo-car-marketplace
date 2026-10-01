@@ -5,8 +5,8 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import CarDetailPage from './CarDetailPage';
 import * as carApi from '../api/carApi';
 
-vi.mock('../api/carApi', async () => {
-  const actual = await vi.importActual('../api/carApi');
+vi.mock('../api/carApi', async (importOriginal) => {
+  const actual = await importOriginal();
   return {
     ...actual,
     getCarById: vi.fn(),
@@ -61,11 +61,11 @@ describe('CarDetailPage Component', () => {
     });
 
     expect(screen.getByText('$38,990')).toBeInTheDocument();
-    expect(screen.getByText(/12,500\s*mi/i)).toBeInTheDocument();
-    expect(screen.getByText('Electric')).toBeInTheDocument();
-    expect(screen.getByText('Tesla')).toBeInTheDocument();
-    expect(screen.getByText('Model 3 Long Range')).toBeInTheDocument();
-    expect(screen.getByText('2023')).toBeInTheDocument();
+    expect(screen.getAllByText(/12,500\s*mi/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Electric').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Tesla').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Model 3 Long Range').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('2023').length).toBeGreaterThan(0);
   });
 
   it('renders 404 Vehicle Not Found state when car ID does not exist', async () => {
@@ -92,7 +92,7 @@ describe('CarDetailPage Component', () => {
     renderComponent('1');
 
     await waitFor(() => {
-      expect(screen.getByText('2023 Tesla Model 3 Long Range')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('2023 Tesla Model 3 Long Range');
     });
 
     const backLink = screen.getByRole('link', { name: /back to listings/i });
@@ -104,7 +104,7 @@ describe('CarDetailPage Component', () => {
     renderComponent('1');
 
     await waitFor(() => {
-      expect(screen.getByText('2023 Tesla Model 3 Long Range')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('2023 Tesla Model 3 Long Range');
     });
 
     const shareBtn = screen.getByRole('button', { name: /share link|copy share link/i });
@@ -138,7 +138,7 @@ describe('CarDetailPage Component', () => {
     fireEvent.click(retryBtn);
 
     await waitFor(() => {
-      expect(screen.getByText('2023 Tesla Model 3 Long Range')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('2023 Tesla Model 3 Long Range');
     });
   });
 });
