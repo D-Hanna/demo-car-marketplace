@@ -1,0 +1,214 @@
+openapi: 3.0.3
+info:
+  title: Car Marketplace API
+  description: API specification for Car Marketplace platform proof-of-concept.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+
+paths:
+  /api/v1/cars:
+    get:
+      summary: Retrieve a list of cars
+      description: Returns cars matching optional filters for make, maxPrice, and minYear.
+      operationId: getCars
+      parameters:
+        - name: make
+          in: query
+          description: Filter by car manufacturer / make (case-insensitive search)
+          required: false
+          schema:
+            type: string
+        - name: maxPrice
+          in: query
+          description: Filter cars with price less than or equal to this amount
+          required: false
+          schema:
+            type: number
+            format: double
+            minimum: 0
+        - name: minYear
+          in: query
+          description: Filter cars manufactured in or after this year
+          required: false
+          schema:
+            type: integer
+            minimum: 1900
+      responses:
+        '200':
+          description: Successfully retrieved list of cars
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+
+    post:
+      summary: Create a new car listing
+      description: Adds a new car to the marketplace.
+      operationId: createCar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarRequest'
+      responses:
+        '201':
+          description: Car created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Validation error or malformed request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+
+  /api/v1/cars/{id}:
+    get:
+      summary: Get car details by ID
+      description: Retrieves detailed information for a single car.
+      operationId: getCarById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the car
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Car found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+
+components:
+  schemas:
+    FuelType:
+      type: string
+      enum:
+        - GASOLINE
+        - DIESEL
+        - ELECTRIC
+        - HYBRID
+        - PLUGIN_HYBRID
+      example: ELECTRIC
+
+    CarRequest:
+      type: object
+      required:
+        - make
+        - model
+        - year
+        - mileage
+        - price
+        - fuelType
+      properties:
+        make:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: Tesla
+        model:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: Model 3
+        year:
+          type: integer
+          minimum: 1900
+          maximum: 2100
+          example: 2023
+        mileage:
+          type: integer
+          minimum: 0
+          example: 12500
+        price:
+          type: number
+          format: double
+          minimum: 0
+          example: 38990.00
+        fuelType:
+          $ref: '#/components/schemas/FuelType'
+        imageUrl:
+          type: string
+          format: uri
+          example: https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=800&q=80
+
+    Car:
+      type: object
+      required:
+        - id
+        - make
+        - model
+        - year
+        - mileage
+        - price
+        - fuelType
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        make:
+          type: string
+          example: Tesla
+        model:
+          type: string
+          example: Model 3
+        year:
+          type: integer
+          example: 2023
+        mileage:
+          type: integer
+          example: 12500
+        price:
+          type: number
+          format: double
+          example: 38990.00
+        fuelType:
+          $ref: '#/components/schemas/FuelType'
+        imageUrl:
+          type: string
+          format: uri
+          example: https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=800&q=80
+
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          example: about:blank
+        title:
+          type: string
+          example: Bad Request
+        status:
+          type: integer
+          example: 400
+        detail:
+          type: string
+          example: Invalid input parameters
+        instance:
+          type: string
+          format: uri
+          example: /api/v1/cars
+        errors:
+          type: array
+          items:
+            type: string
+          example: ["make is required", "year must be greater than or equal to 1900"]
