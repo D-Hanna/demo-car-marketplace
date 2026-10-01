@@ -1,9 +1,21 @@
 import React from 'react';
-import { CarIcon, PlusIcon } from './Icons';
+import { CarIcon, PlusIcon, SunIcon, MoonIcon } from './Icons';
 
-export default function Navbar({ isDemoMode, onOpenCreateModal, onRetryConnection, isConnecting }) {
+export default function Navbar({
+  isDemoMode,
+  onOpenCreateModal,
+  onRetryConnection,
+  isConnecting,
+  isDark,
+  onToggleTheme,
+  theme,
+  toggleTheme,
+}) {
+  const isDarkMode = isDark !== undefined ? isDark : theme === 'dark';
+  const handleToggle = onToggleTheme || toggleTheme;
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Logo & Name */}
@@ -13,14 +25,14 @@ export default function Navbar({ isDemoMode, onOpenCreateModal, onRetryConnectio
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+                <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-white dark:via-blue-200 dark:to-indigo-200 bg-clip-text text-transparent">
                   AutoMarket
                 </span>
-                <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                   OpenAPI 3.0
                 </span>
               </div>
-              <p className="text-xs text-slate-500 hidden sm:block">
+              <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
                 Premium Verified Vehicle Marketplace
               </p>
             </div>
@@ -32,7 +44,7 @@ export default function Navbar({ isDemoMode, onOpenCreateModal, onRetryConnectio
             <div className="flex items-center">
               {isDemoMode ? (
                 <div
-                  className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200/70"
+                  className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200/70 dark:border-amber-800/60"
                   title="Backend at localhost:8080 not reached. Operating in Demo Fallback Mode."
                 >
                   <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
@@ -40,18 +52,34 @@ export default function Navbar({ isDemoMode, onOpenCreateModal, onRetryConnectio
                   <button
                     onClick={onRetryConnection}
                     disabled={isConnecting}
-                    className="ml-1 text-[11px] underline text-amber-700 hover:text-amber-900 cursor-pointer disabled:opacity-50"
+                    className="ml-1 text-[11px] underline text-amber-700 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-200 cursor-pointer disabled:opacity-50"
                   >
                     {isConnecting ? 'Checking...' : 'Retry API'}
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                   <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                   <span className="font-medium hidden sm:inline">API Connected</span>
                 </div>
               )}
             </div>
+
+            {/* Theme Toggle Button */}
+            {handleToggle && (
+              <button
+                type="button"
+                onClick={handleToggle}
+                aria-label="Toggle theme"
+                className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {isDarkMode ? (
+                  <SunIcon className="w-5 h-5 text-amber-400" />
+                ) : (
+                  <MoonIcon className="w-5 h-5 text-slate-600" />
+                )}
+              </button>
+            )}
 
             {/* List a Car Action Button */}
             <button

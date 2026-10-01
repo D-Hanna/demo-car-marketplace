@@ -170,35 +170,35 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-200 transform transition-all my-8"
+        className="relative bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-200 dark:border-slate-800 transform transition-all my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="px-6 sm:px-8 pt-6 pb-4 border-b border-slate-100 flex items-center justify-between">
+        <div className="px-6 sm:px-8 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
               <PlusIcon className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-extrabold text-slate-900">List a Vehicle</h2>
-              <p className="text-xs text-slate-500">Publish a new car listing to the marketplace</p>
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100">List a Vehicle</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Publish a new car listing to the marketplace</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center justify-center transition-colors cursor-pointer"
           >
             <CloseIcon className="w-5 h-5" />
           </button>
         </div>
 
         {/* Quick Presets Bar */}
-        <div className="px-6 sm:px-8 py-3 bg-slate-50/80 border-b border-slate-100 flex items-center gap-2 overflow-x-auto text-xs">
-          <span className="text-slate-400 font-medium flex items-center shrink-0">
+        <div className="px-6 sm:px-8 py-3 bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto text-xs">
+          <span className="text-slate-400 dark:text-slate-400 font-medium flex items-center shrink-0">
             <SparklesIcon className="w-3.5 h-3.5 mr-1 text-amber-500" />
             Quick fill:
           </span>
@@ -207,7 +207,7 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
               key={idx}
               type="button"
               onClick={() => applyPreset(p)}
-              className="px-2.5 py-1 bg-white hover:bg-blue-50 hover:text-blue-700 text-slate-600 rounded-lg border border-slate-200 font-medium whitespace-nowrap transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:text-blue-700 dark:hover:text-blue-300 text-slate-600 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 font-medium whitespace-nowrap transition-colors cursor-pointer"
             >
               {p.label}
             </button>
@@ -216,16 +216,16 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
 
         {/* RFC 7807 Server ProblemDetail Error Banner */}
         {serverProblem && (
-          <div className="mx-6 sm:mx-8 mt-4 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 animate-fadeIn">
+          <div className="mx-6 sm:mx-8 mt-4 p-4 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-red-800 dark:text-red-200 animate-fadeIn">
             <div className="flex items-start space-x-2">
               <AlertCircleIcon className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
               <div className="text-xs">
                 <span className="font-bold block text-sm">
                   {serverProblem.title} {serverProblem.status ? `(${serverProblem.status})` : ''}
                 </span>
-                <p className="mt-0.5 text-red-700">{serverProblem.detail}</p>
+                <p className="mt-0.5 text-red-700 dark:text-red-300">{serverProblem.detail}</p>
                 {serverProblem.errors.length > 0 && (
-                  <ul className="mt-2 list-disc list-inside space-y-0.5 font-medium text-red-800">
+                  <ul className="mt-2 list-disc list-inside space-y-0.5 font-medium text-red-800 dark:text-red-300">
                     {serverProblem.errors.map((err, i) => (
                       <li key={i}>{err}</li>
                     ))}
@@ -241,7 +241,7 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Make */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Make <span className="text-red-500">*</span>
               </label>
               <input
@@ -253,18 +253,18 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
                 onChange={(e) => handleChange('make', e.target.value)}
                 className={`block w-full rounded-xl border px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
                   clientErrors.make
-                    ? 'border-red-300 bg-red-50/30 text-red-900 focus:ring-red-500/20'
-                    : 'border-slate-300 text-slate-900 focus:border-blue-500 focus:ring-blue-500/20'
+                    ? 'border-red-300 dark:border-red-700 bg-red-50/30 dark:bg-red-950/30 text-red-900 dark:text-red-200 focus:ring-red-500/20'
+                    : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-blue-500/20'
                 }`}
               />
               {clientErrors.make && (
-                <p className="text-[11px] text-red-600 mt-1">{clientErrors.make}</p>
+                <p className="text-[11px] text-red-600 dark:text-red-400 mt-1">{clientErrors.make}</p>
               )}
             </div>
 
             {/* Model */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Model <span className="text-red-500">*</span>
               </label>
               <input
@@ -276,18 +276,18 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
                 onChange={(e) => handleChange('model', e.target.value)}
                 className={`block w-full rounded-xl border px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
                   clientErrors.model
-                    ? 'border-red-300 bg-red-50/30 text-red-900 focus:ring-red-500/20'
-                    : 'border-slate-300 text-slate-900 focus:border-blue-500 focus:ring-blue-500/20'
+                    ? 'border-red-300 dark:border-red-700 bg-red-50/30 dark:bg-red-950/30 text-red-900 dark:text-red-200 focus:ring-red-500/20'
+                    : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-blue-500/20'
                 }`}
               />
               {clientErrors.model && (
-                <p className="text-[11px] text-red-600 mt-1">{clientErrors.model}</p>
+                <p className="text-[11px] text-red-600 dark:text-red-400 mt-1">{clientErrors.model}</p>
               )}
             </div>
 
             {/* Year */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Year <span className="text-red-500">*</span>
               </label>
               <input
@@ -300,24 +300,24 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
                 onChange={(e) => handleChange('year', e.target.value)}
                 className={`block w-full rounded-xl border px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
                   clientErrors.year
-                    ? 'border-red-300 bg-red-50/30 text-red-900 focus:ring-red-500/20'
-                    : 'border-slate-300 text-slate-900 focus:border-blue-500 focus:ring-blue-500/20'
+                    ? 'border-red-300 dark:border-red-700 bg-red-50/30 dark:bg-red-950/30 text-red-900 dark:text-red-200 focus:ring-red-500/20'
+                    : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-blue-500/20'
                 }`}
               />
               {clientErrors.year && (
-                <p className="text-[11px] text-red-600 mt-1">{clientErrors.year}</p>
+                <p className="text-[11px] text-red-600 dark:text-red-400 mt-1">{clientErrors.year}</p>
               )}
             </div>
 
             {/* Fuel Type */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Fuel Type <span className="text-red-500">*</span>
               </label>
               <select
                 value={formData.fuelType}
                 onChange={(e) => handleChange('fuelType', e.target.value)}
-                className="block w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               >
                 {FUEL_TYPES.map((ft) => (
                   <option key={ft.value} value={ft.value}>
@@ -329,11 +329,11 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
 
             {/* Price ($) */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Price (USD $) <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-sm">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 dark:text-slate-500 text-sm">
                   $
                 </span>
                 <input
@@ -346,19 +346,19 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
                   onChange={(e) => handleChange('price', e.target.value)}
                   className={`block w-full rounded-xl border pl-8 pr-3 py-2 text-sm focus:outline-none focus:ring-2 ${
                     clientErrors.price
-                      ? 'border-red-300 bg-red-50/30 text-red-900 focus:ring-red-500/20'
-                      : 'border-slate-300 text-slate-900 focus:border-blue-500 focus:ring-blue-500/20'
+                      ? 'border-red-300 dark:border-red-700 bg-red-50/30 dark:bg-red-950/30 text-red-900 dark:text-red-200 focus:ring-red-500/20'
+                      : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-blue-500/20'
                   }`}
                 />
               </div>
               {clientErrors.price && (
-                <p className="text-[11px] text-red-600 mt-1">{clientErrors.price}</p>
+                <p className="text-[11px] text-red-600 dark:text-red-400 mt-1">{clientErrors.price}</p>
               )}
             </div>
 
             {/* Mileage */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Mileage (miles) <span className="text-red-500">*</span>
               </label>
               <input
@@ -370,33 +370,33 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
                 onChange={(e) => handleChange('mileage', e.target.value)}
                 className={`block w-full rounded-xl border px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
                   clientErrors.mileage
-                    ? 'border-red-300 bg-red-50/30 text-red-900 focus:ring-red-500/20'
-                    : 'border-slate-300 text-slate-900 focus:border-blue-500 focus:ring-blue-500/20'
+                    ? 'border-red-300 dark:border-red-700 bg-red-50/30 dark:bg-red-950/30 text-red-900 dark:text-red-200 focus:ring-red-500/20'
+                    : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring-blue-500/20'
                 }`}
               />
               {clientErrors.mileage && (
-                <p className="text-[11px] text-red-600 mt-1">{clientErrors.mileage}</p>
+                <p className="text-[11px] text-red-600 dark:text-red-400 mt-1">{clientErrors.mileage}</p>
               )}
             </div>
           </div>
 
           {/* Image URL Input & Preview */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              Image URL <span className="text-slate-400 font-normal">(optional photo link)</span>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+              Image URL <span className="text-slate-400 dark:text-slate-500 font-normal">(optional photo link)</span>
             </label>
             <input
               type="url"
               placeholder="https://images.unsplash.com/..."
               value={formData.imageUrl}
               onChange={(e) => handleChange('imageUrl', e.target.value)}
-              className="block w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             />
 
             {/* Live Preview Container */}
             {formData.imageUrl && (
-              <div className="mt-3 p-2 bg-slate-50 rounded-xl border border-slate-200 flex items-center space-x-3">
-                <div className="w-16 h-12 rounded-lg bg-slate-200 overflow-hidden shrink-0">
+              <div className="mt-3 p-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+                <div className="w-16 h-12 rounded-lg bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
                   <img
                     src={formData.imageUrl}
                     alt="Preview"
@@ -405,10 +405,10 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
                   />
                 </div>
                 <div className="text-xs">
-                  <span className="font-semibold text-slate-700 block">
+                  <span className="font-semibold text-slate-700 dark:text-slate-200 block">
                     {previewError ? 'Image preview unavailable' : 'Image loaded successfully'}
                   </span>
-                  <span className="text-[11px] text-slate-400 truncate max-w-xs block">
+                  <span className="text-[11px] text-slate-400 dark:text-slate-500 truncate max-w-xs block">
                     {previewError ? 'Will use standard marketplace placeholder' : formData.imageUrl}
                   </span>
                 </div>
@@ -417,12 +417,12 @@ export default function CreateCarModal({ isOpen, onClose, onSubmitCar }) {
           </div>
 
           {/* Actions */}
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-end space-x-3">
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end space-x-3">
             <button
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-sm font-semibold transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-colors cursor-pointer"
             >
               Cancel
             </button>

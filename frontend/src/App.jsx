@@ -6,8 +6,10 @@ import CarDetailModal from './components/CarDetailModal';
 import CreateCarModal from './components/CreateCarModal';
 import { getCars, createCar, checkBackendConnection } from './api/carApi';
 import { AlertCircleIcon, CheckCircleIcon, CarIcon, SparklesIcon } from './components/Icons';
+import { useTheme } from './hooks/useTheme';
 
 export default function App() {
+  const { theme, isDark, toggleTheme } = useTheme();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isDemoMode, setIsDemoMode] = useState(false);
@@ -119,7 +121,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-600 selection:text-white">
       {/* Toast Notification */}
       {toast && (
         <div className="fixed top-20 right-4 z-50 max-w-md animate-bounce-short">
@@ -152,16 +154,20 @@ export default function App() {
         onOpenCreateModal={() => setIsCreateModalOpen(true)}
         onRetryConnection={handleRetryConnection}
         isConnecting={isConnecting}
+        isDark={isDark}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        toggleTheme={toggleTheme}
       />
 
       {/* Demo Mode Notice Bar (if in demo mode) */}
       {isDemoMode && (
-        <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 border-b border-amber-200/60 py-2.5 px-4 text-center">
-          <div className="max-w-7xl mx-auto flex items-center justify-center space-x-2 text-xs text-amber-900 font-medium">
+        <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 dark:from-amber-500/20 dark:via-amber-500/10 dark:to-amber-500/20 border-b border-amber-200/60 dark:border-amber-800/60 py-2.5 px-4 text-center">
+          <div className="max-w-7xl mx-auto flex items-center justify-center space-x-2 text-xs text-amber-900 dark:text-amber-200 font-medium">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping inline-block"></span>
             <span>
               <strong>Demo Fallback Active:</strong> Backend API at{' '}
-              <code className="bg-amber-100/80 px-1 py-0.5 rounded text-[11px] font-mono">
+              <code className="bg-amber-100/80 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/60 px-1 py-0.5 rounded text-[11px] font-mono text-amber-950 dark:text-amber-200">
                 http://localhost:8080/api/v1/cars
               </code>{' '}
               is not responding. Serving realistic demo data with local storage simulation.
@@ -169,7 +175,7 @@ export default function App() {
             <button
               onClick={handleRetryConnection}
               disabled={isConnecting}
-              className="underline text-amber-800 hover:text-amber-950 font-bold ml-1 cursor-pointer disabled:opacity-50"
+              className="underline text-amber-800 dark:text-amber-300 hover:text-amber-950 dark:hover:text-amber-100 font-bold ml-1 cursor-pointer disabled:opacity-50"
             >
               {isConnecting ? 'Checking...' : 'Reconnect Now'}
             </button>
@@ -181,10 +187,10 @@ export default function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Headline */}
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
             Find Your Next Vehicle
           </h1>
-          <p className="text-sm text-slate-500 mt-1 max-w-2xl">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
             Explore certified premium vehicles, filter by powertrain & pricing, and list new cars
             in seconds adhering directly to the OpenAPI 3.0 specification.
           </p>
@@ -200,16 +206,16 @@ export default function App() {
 
         {/* RFC 7807 Error Banner (if error occurred during query) */}
         {apiError && (
-          <div className="mb-8 p-5 rounded-2xl bg-red-50 border border-red-200 text-red-900 shadow-xs">
+          <div className="mb-8 p-5 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-red-900 dark:text-red-200 shadow-xs">
             <div className="flex items-start space-x-3">
               <AlertCircleIcon className="w-6 h-6 text-red-600 shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-bold text-base">
+                <h3 className="font-bold text-base text-red-900 dark:text-red-100">
                   {apiError.title} {apiError.status ? `(Status ${apiError.status})` : ''}
                 </h3>
-                <p className="text-xs text-red-700 mt-1">{apiError.detail}</p>
+                <p className="text-xs text-red-700 dark:text-red-300 mt-1">{apiError.detail}</p>
                 {apiError.errors && apiError.errors.length > 0 && (
-                  <ul className="mt-2 list-disc list-inside text-xs space-y-1 text-red-800">
+                  <ul className="mt-2 list-disc list-inside text-xs space-y-1 text-red-800 dark:text-red-300">
                     {apiError.errors.map((e, idx) => (
                       <li key={idx}>{e}</li>
                     ))}
@@ -232,12 +238,12 @@ export default function App() {
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs animate-pulse flex flex-col space-y-3"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-xs animate-pulse flex flex-col space-y-3"
               >
-                <div className="w-full aspect-[16/10] bg-slate-200 rounded-xl" />
-                <div className="h-4 bg-slate-200 rounded-md w-3/4" />
-                <div className="h-6 bg-slate-200 rounded-md w-1/2" />
-                <div className="h-8 bg-slate-100 rounded-lg w-full mt-2" />
+                <div className="w-full aspect-[16/10] bg-slate-200 dark:bg-slate-800 rounded-xl" />
+                <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded-md w-3/4" />
+                <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-md w-1/2" />
+                <div className="h-8 bg-slate-100 dark:bg-slate-800/60 rounded-lg w-full mt-2" />
               </div>
             ))}
           </div>
@@ -252,18 +258,18 @@ export default function App() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 px-4 bg-white rounded-3xl border border-dashed border-slate-300">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+          <div className="text-center py-16 px-4 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
               <CarIcon className="w-8 h-8 text-blue-500" />
             </div>
-            <h3 className="text-lg font-bold text-slate-800">No vehicles match your criteria</h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-5">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">No vehicles match your criteria</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1 mb-5">
               Try adjusting your price range, year minimum, or search keyword to see more results.
             </p>
             <div className="flex items-center justify-center space-x-3">
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
               >
                 Reset Filters
               </button>
@@ -294,16 +300,16 @@ export default function App() {
       />
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-slate-200 bg-white py-6 text-xs text-slate-500">
+      <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 text-xs text-slate-500 dark:text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-slate-800">AutoMarket PoC</span>
+            <span className="font-bold text-slate-800 dark:text-slate-200">AutoMarket PoC</span>
             <span>&bull;</span>
             <span>Contract-First Architecture</span>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-slate-400">Specification: OpenAPI 3.0.3</span>
-            <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-mono text-[10px]">
+            <span className="text-slate-400 dark:text-slate-500">Specification: OpenAPI 3.0.3</span>
+            <span className="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-mono text-[10px]">
               /specs/car-marketplace-api.yaml
             </span>
           </div>

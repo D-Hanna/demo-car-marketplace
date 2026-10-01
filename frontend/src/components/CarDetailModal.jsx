@@ -32,11 +32,11 @@ export default function CarDetailModal({ car, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-slate-200/90 transform transition-all"
+        className="relative bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-slate-200/90 dark:border-slate-800 transform transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header with image */}
@@ -68,7 +68,7 @@ export default function CarDetailModal({ car, onClose }) {
                   <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`}></span>
                   <span>{badge.label}</span>
                 </span>
-                <span className="text-xs text-white/80 bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full font-medium">
+                <span className="text-xs text-white/80 bg-white/20 dark:bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full font-medium">
                   VIN ID #{car.id}
                 </span>
               </div>
@@ -92,38 +92,38 @@ export default function CarDetailModal({ car, onClose }) {
         <div className="p-6 sm:p-8 space-y-6">
           {/* Key Metric Highlights */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center text-center">
-              <CalendarIcon className="w-5 h-5 text-blue-600 mb-1" />
-              <span className="text-[11px] uppercase font-bold text-slate-500">Model Year</span>
-              <span className="text-base font-extrabold text-slate-800">{car.year}</span>
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center text-center">
+              <CalendarIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-1" />
+              <span className="text-[11px] uppercase font-bold text-slate-500 dark:text-slate-400">Model Year</span>
+              <span className="text-base font-extrabold text-slate-800 dark:text-slate-100">{car.year}</span>
             </div>
 
-            <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center text-center">
-              <GaugeIcon className="w-5 h-5 text-blue-600 mb-1" />
-              <span className="text-[11px] uppercase font-bold text-slate-500">Mileage</span>
-              <span className="text-base font-extrabold text-slate-800">{formattedMileage} mi</span>
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center text-center">
+              <GaugeIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-1" />
+              <span className="text-[11px] uppercase font-bold text-slate-500 dark:text-slate-400">Mileage</span>
+              <span className="text-base font-extrabold text-slate-800 dark:text-slate-100">{formattedMileage} mi</span>
             </div>
 
-            <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center text-center">
-              <FuelIcon className="w-5 h-5 text-blue-600 mb-1" />
-              <span className="text-[11px] uppercase font-bold text-slate-500">Powertrain</span>
-              <span className="text-base font-extrabold text-slate-800 truncate max-w-full">
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center text-center">
+              <FuelIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-1" />
+              <span className="text-[11px] uppercase font-bold text-slate-500 dark:text-slate-400">Powertrain</span>
+              <span className="text-base font-extrabold text-slate-800 dark:text-slate-100 truncate max-w-full">
                 {badge.label}
               </span>
             </div>
           </div>
 
           {/* Financing & Inspection Guarantee Box */}
-          <div className="bg-gradient-to-r from-blue-50/70 to-indigo-50/70 rounded-2xl p-4 border border-blue-100 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-blue-50/70 to-indigo-50/70 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-2xl p-4 border border-blue-100 dark:border-blue-900/40 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
                 <SparklesIcon className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-900">
-                  Est. Financing: <span className="text-blue-700">${estimatedMonthly}/mo</span>
+                <p className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                  Est. Financing: <span className="text-blue-700 dark:text-blue-400">${estimatedMonthly}/mo</span>
                 </p>
-                <p className="text-[11px] text-slate-600">
+                <p className="text-[11px] text-slate-600 dark:text-slate-300">
                   Includes 150-Point Certified Pre-Purchase Inspection & 12-Month Powertrain Warranty.
                 </p>
               </div>
@@ -132,10 +132,10 @@ export default function CarDetailModal({ car, onClose }) {
 
           {/* Included Features List */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
               Marketplace Guarantees
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-xs text-slate-700">
+            <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
               <div className="flex items-center space-x-2">
                 <CheckCircleIcon className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span>Clean Title Guaranteed</span>
@@ -156,10 +156,10 @@ export default function CarDetailModal({ car, onClose }) {
           </div>
 
           {/* Modal Actions */}
-          <div className="pt-2 flex items-center justify-end space-x-3 border-t border-slate-100">
+          <div className="pt-2 flex items-center justify-end space-x-3 border-t border-slate-100 dark:border-slate-800">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-sm font-semibold transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-colors cursor-pointer"
             >
               Close
             </button>
